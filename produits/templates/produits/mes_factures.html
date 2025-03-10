@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Mes Factures{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>📄 Mes Factures</h1>
+    <p>Retrouvez toutes vos factures de commandes payées.</p>
+
+    {% if commandes %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Statut</th>
+                    <th>Facture</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                <tr>
+                    <td>{{ commande.id }}</td>
+                    <td>{{ commande.date_commande|date:"d/m/Y H:i" }}</td>
+                    <td>{{ commande.total }} €</td>
+                    <td><span class="badge bg-success">{{ commande.get_statut_display }}</span></td>
+                    <td>
+                        <a href="{% url 'generer_facture' commande.id %}" class="btn btn-outline-danger btn-sm">
+                            📄 Télécharger
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-muted">❌ Aucune facture disponible.</p>
+    {% endif %}
+</div>
+{% endblock %}

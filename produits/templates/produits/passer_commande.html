@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Valider la Commande{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>🛒 Validation de votre commande</h1>
+    <p>Veuillez renseigner vos informations pour finaliser la commande.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="nom" class="form-label">Nom :</label>
+            <input type="text" name="nom" id="nom" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email :</label>
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">✅ Valider la commande</button>
+    </form>
+</div>
+{% endblock %}

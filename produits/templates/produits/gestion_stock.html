@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestion des Stocks{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>📊 Gestion des Stocks</h1>
+
+    <!-- 🔥 Produits en rupture de stock -->
+    <h2 class="mt-4 text-danger">❌ Produits en rupture de stock</h2>
+    {% if produits_en_rupture %}
+        <table class="table table-bordered shadow-lg table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prix</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit in produits_en_rupture %}
+                    <tr class="bg-danger text-white">
+                        <td>{{ produit.id }}</td>
+                        <td>{{ produit.nom }}</td>
+                        <td>{{ produit.prix }} €</td>
+                        <td>❌ Rupture</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-success">✅ Aucun produit en rupture de stock.</p>
+    {% endif %}
+
+    <!-- 🔥 Produits en stock faible -->
+    <h2 class="mt-4 text-warning">⚠️ Produits en stock faible</h2>
+    {% if produits_faibles %}
+        <table class="table table-bordered shadow-lg">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prix</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit in produits_faibles %}
+                    <tr class="bg-warning">
+                        <td>{{ produit.id }}</td>
+                        <td>{{ produit.nom }}</td>
+                        <td>{{ produit.prix }} €</td>
+                        <td>{{ produit.stock }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-success">✅ Aucun produit en stock faible.</p>
+    {% endif %}
+</div>
+{% endblock %}

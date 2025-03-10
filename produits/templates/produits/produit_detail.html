@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{ produit.nom }} - Détails{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row d-flex align-items-start">
+        <!-- ✅ Image principale avec miniatures (Gauche) -->
+        <div class="col-md-6 text-center">
+            <img id="imagePrincipale" src="{{ produit.image_principale.url }}" class="img-fluid img-detail mb-3" alt="{{ produit.nom }}">
+
+            <div class="d-flex justify-content-center flex-wrap">
+                {% if produit.image_principale %}
+                    <img src="{{ produit.image_principale.url }}" class="img-thumbnail img-miniature" onclick="changerImage(this)">
+                {% endif %}
+                {% if produit.image_1 %}
+                    <img src="{{ produit.image_1.url }}" class="img-thumbnail img-miniature" onclick="changerImage(this)">
+                {% endif %}
+                {% if produit.image_2 %}
+                    <img src="{{ produit.image_2.url }}" class="img-thumbnail img-miniature" onclick="changerImage(this)">
+                {% endif %}
+                {% if produit.image_3 %}
+                    <img src="{{ produit.image_3.url }}" class="img-thumbnail img-miniature" onclick="changerImage(this)">
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- ✅ Caractéristiques et description (Droite) -->
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            <h1>{{ produit.nom }}</h1>
+            <h3 class="text-primary">{{ produit.prix }} €</h3>
+
+            <h4>Caractéristiques</h4>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Catégorie :</strong> {{ produit.get_categorie_display }}</li>
+                
+                {% if produit.categorie == "informatique" or produit.categorie == "telephone" %}
+                    <li class="list-group-item"><strong>Capacité de stockage :</strong> {{ produit.capacite_stockage }}</li>
+                    <li class="list-group-item"><strong>Mémoire RAM :</strong> {{ produit.memoire_ram }}</li>
+                    <li class="list-group-item"><strong>Taille écran :</strong> {{ produit.taille_ecran }}</li>
+                {% endif %}
+                
+                {% if produit.categorie == "cosmetique" or produit.categorie == "alimentaire" %}
+                    <li class="list-group-item"><strong>Ingrédients :</strong> {{ produit.ingredients }}</li>
+                {% endif %}
+                
+                {% if produit.categorie == "alimentaire" %}
+                    <li class="list-group-item"><strong>Date de péremption :</strong> {{ produit.date_peremption|date:"d/m/Y" }}</li>
+                {% endif %}
+                
+                <li class="list-group-item"><strong>Marque :</strong> {{ produit.marque }}</li>
+            </ul>
+
+            <a href="{% url 'ajouter_favori' produit.id %}" class="btn btn-outline-danger w-100 mt-2">
+                <i class="fas fa-heart"></i> Ajouter aux Favoris
+            </a>
+
+            <h4 class="mt-4">Description</h4>
+            <p>{{ produit.description }}</p>
+
+            <h4 class="mt-4">Avis Clients</h4>
+            {% if produit.avis.all %}
+                <p>Note Moyenne : ⭐ {{ produit.moyenne_notes }}/5</p>
+                <ul class="list-group">
+                    {% for avis in produit.avis.all %}
+                        <li class="list-group-item">
+                            <strong>{{ avis.utilisateur.username }}</strong> - <span class="text-warning">{{ avis.note }}⭐</span>
+                            <br>
+                            <small class="text-muted">{{ avis.date_ajout|date:"d/m/Y" }}</small>
+                            <p>{{ avis.commentaire }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucun avis pour le moment.</p>
+            {% endif %}
+
+            <a href="{% url 'ajouter_avis' produit.id %}" class="btn btn-outline-primary mt-3">
+                <i class="fas fa-star"></i> Donner un Avis
+            </a>
+
+            <a href="{% url 'ajouter_au_panier' produit.id %}" class="btn btn-primary w-100 mt-3">
+                <i class="fas fa-cart-plus"></i> Ajouter au Panier
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ Script pour changer l’image affichée -->
+<script>
+    function changerImage(imgElement) {
+        let imagePrincipale = document.getElementById("imagePrincipale");
+        imagePrincipale.src = imgElement.src;
+    }
+</script>
+
+<!-- ✅ Produits Similaires -->
+<h4 class="mt-5">🔄 Produits Similaires</h4>
+<div class="row">
+    {% for produit_similaire in produits_similaires %}
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm">
+            {% if produit_similaire.image_principale %}
+                <img src="{{ produit_similaire.image_principale.url }}" class="card-img-top img-produit" alt="{{ produit_similaire.nom }}">
+            {% else %}
+                <img src="/media/produits/default.jpg" class="card-img-top img-produit" alt="Image par défaut">
+            {% endif %}
+            <div class="card-body text-center">
+                <h6 class="card-title">{{ produit_similaire.nom }}</h6>
+                <p class="text-muted">{{ produit_similaire.prix }} €</p>
+                <a href="{% url 'produit_detail' produit_similaire.id %}" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-eye"></i> Voir le Produit
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted">Aucun produit similaire trouvé.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Demande de Retour{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>🔄 Demande de Retour pour Commande #{{ commande.id }}</h1>
+    <p>Merci d'expliquer pourquoi vous souhaitez retourner cette commande.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="motif" class="form-label">Motif du retour :</label>
+            {{ form.motif }}
+        </div>
+        <button type="submit" class="btn btn-warning">📩 Envoyer la Demande</button>
+    </form>
+</div>
+{% endblock %}

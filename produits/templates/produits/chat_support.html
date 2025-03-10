@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Support en Ligne{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>💬 Chat Support</h1>
+
+    <!-- ✅ Liste des utilisateurs connectés -->
+    <h4>👥 Utilisateurs en ligne :</h4>
+    <ul id="liste-utilisateurs" class="list-group mb-3"></ul>
+
+    <div id="chat-box" class="border p-3" style="height: 400px; overflow-y: scroll;">
+        {% for msg in messages_chat %}
+            <p><strong>{{ msg.utilisateur.username }}</strong> ({{ msg.date_envoi|date:"H:i" }}): {{ msg.message }}</p>
+        {% endfor %}
+    </div>
+    <input type="text" id="message" class="form-control mt-3" placeholder="Écrivez un message...">
+    <button class="btn btn-primary mt-2" onclick="envoyerMessage()">📩 Envoyer</button>
+</div>
+
+<script>
+    const chatSocket = new WebSocket("ws://" + window.location.host + "/ws/chat/");
+    const chatBox = document.getElementById("chat-box");
+    const listeUtilisateurs = document.getElementById("liste-utilisateurs");
+
+    chatSocket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+
+        if (data.type === "chat_message") {
+            chatBox.innerHTML += `<p><strong>${data.utilisateur}</strong>: ${data.message}</p>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        if (data.type === "liste_utilisateurs") {
+            listeUtilisateurs.innerHTML = "";
+            data.utilisateurs.forEach(utilisateur => {
+                listeUtilisateurs.innerHTML += `<li class="list-group-item">✅ ${utilisateur}</li>`;
+            });
+        }
+    };
+
+    function envoyerMessage() {
+        const messageInput = document.getElementById("message");
+        const message = messageInput.value;
+        chatSocket.send(JSON.stringify({"message": message}));
+        messageInput.value = "";
+    }
+</script>
+{% endblock %}

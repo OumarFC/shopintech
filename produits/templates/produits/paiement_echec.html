@@ -1,0 +1,16 @@
+
+2. **Fichier `paiement_echec.html`**
+```html
+{% extends 'base.html' %}
+
+{% block title %}Paiement Échoué - Shopintech{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 text-center">
+        <h1>❌ Paiement Échoué</h1>
+        <p>Votre paiement n'a pas été accepté. Veuillez réessayer.</p>
+        <a href="{% url 'paiement' %}" class="btn btn-warning">🔄 Réessayer le paiement</a>
+        <a href="{% url 'index' %}" class="btn btn-secondary">🏠 Retour à la boutique</a>
+    </div>
+{% endblock %}
+```

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Nos Produits - Shopintech{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">📦 Nos Produits</h1>
+
+    <!-- ✅ Formulaire de Filtrage -->
+    <form method="GET" class="mb-4 d-flex gap-2">
+        <select name="categorie" class="form-select">
+            <option value="">Toutes les Catégories</option>
+            <option value="informatique" {% if categorie == "informatique" %}selected{% endif %}>Informatique</option>
+            <option value="telephone" {% if categorie == "telephone" %}selected{% endif %}>Téléphones</option>
+            <option value="cosmetique" {% if categorie == "cosmetique" %}selected{% endif %}>Cosmétiques</option>
+            <option value="alimentaire" {% if categorie == "alimentaire" %}selected{% endif %}>Alimentaire</option>
+        </select>
+
+        <select name="tri" class="form-select">
+            <option value="">Trier par</option>
+            <option value="prix_asc" {% if tri == "prix_asc" %}selected{% endif %}>Prix Croissant</option>
+            <option value="prix_desc" {% if tri == "prix_desc" %}selected{% endif %}>Prix Décroissant</option>
+            <option value="note" {% if tri == "note" %}selected{% endif %}>Meilleures Notes</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">🔍 Filtrer</button>
+    </form>
+
+    <!-- ✅ Affichage des Produits -->
+    <div class="row">
+        {% for produit in produits %}
+        <div class="col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if produit.image_principale %}
+                    <img src="{{ produit.image_principale.url }}" class="card-img-top img-produit" alt="{{ produit.nom }}">
+                {% else %}
+                    <img src="/media/produits/default.jpg" class="card-img-top img-produit" alt="Image par défaut">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ produit.nom }}</h5>
+                    <p class="card-text text-muted">{{ produit.prix }} €</p>
+                    <p class="text-warning">⭐ {{ produit.moyenne_notes }}/5</p>
+                    <a href="{% url 'produit_detail' produit.id %}" class="btn btn-primary w-100">
+                        <i class="fas fa-eye"></i> Voir le Produit
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-danger">❌ Aucun produit trouvé.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

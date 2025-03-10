@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Boîte de Réception{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>📩 Boîte de Réception</h1>
+
+    <h2 class="mt-4">📥 Messages Reçus</h2>
+    <ul class="list-group">
+        {% for message in messages_recus %}
+        <li class="list-group-item">
+            <strong>{{ message.expediteur.username }} :</strong> {{ message.contenu }}
+            <br><small class="text-muted">{{ message.date_envoi }}</small>
+        </li>
+        {% empty %}
+        <li class="list-group-item text-muted">Aucun message reçu.</li>
+        {% endfor %}
+    </ul>
+
+    <h2 class="mt-4">📤 Messages Envoyés</h2>
+    <ul class="list-group">
+        {% for message in messages_envoyes %}
+        <li class="list-group-item">
+            <strong>À {{ message.destinataire.username }} :</strong> {{ message.contenu }}
+            <br><small class="text-muted">{{ message.date_envoi }}</small>
+        </li>
+        {% empty %}
+        <li class="list-group-item text-muted">Aucun message envoyé.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

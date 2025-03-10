@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Envoyer un Message{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>📨 Envoyer un message à {{ destinataire.username }}</h1>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="contenu" class="form-label">Message :</label>
+            <textarea name="contenu" class="form-control" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">📩 Envoyer</button>
+    </form>
+</div>
+{% endblock %}

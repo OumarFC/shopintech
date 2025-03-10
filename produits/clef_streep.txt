@@ -1,0 +1,12 @@
+pk_test_51Qx7njD3bQ3Mp1Wyazs0PGhZiZfh1HEE7I6j3vaAPwUbz0tYf7NPEFQRUjxG7J9talVYAi3XOSc91rLv2umPGAhz00B4oKmFXA
+sk_test_51Qx7njD3bQ3Mp1WypRXxbWnmuSEjKV3I26UtZYN4GheTuxFPpI1dE1c9qr2auTqmYv355anZKjjxbquW5Lg5a1yr007T0dO22Z
+
+
+carte streepe
+
+4242 4242 4242 4242
+✔️ Date d'expiration : N'importe quelle date future (ex: 12/34)
+✔️ CVC : 123
+✔️ Code postal : N'importe quel code
+
+🚀 Cela simule un paiement réussi !

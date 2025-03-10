@@ -1,0 +1,17 @@
+
+2. **Fichier `confirmation_commande.html`**
+```html
+{% extends 'base.html' %}
+
+{% block title %}Confirmation de commande - Shopintech{% endblock %}
+
+{% block content %}
+    <div style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px;">
+        <h2 style="color: #4CAF50;">Merci pour votre achat !</h2>
+        <p>Bonjour <strong>{{ commande.nom_client }}</strong>,</p>
+        <p>Nous avons bien reçu votre commande d'un montant de <strong>{{ commande.total }} €</strong>.</p>
+        <p>Merci pour votre confiance.</p>
+        <hr>
+        <p>Shopintech</p>
+    </div>
+{% endblock %}

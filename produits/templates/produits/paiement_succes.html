@@ -1,0 +1,14 @@
+1. **Fichier `paiement_succes.html`**
+```html
+{% extends 'base.html' %}
+
+{% block title %}Paiement Réussi - Shopintech{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 text-center">
+        <h1>🎉 Paiement Réussi !</h1>
+        <p>Merci pour votre achat. Votre commande a été enregistrée avec succès.</p>
+        <a href="{% url 'index' %}" class="btn btn-primary">🏠 Retour à la boutique</a>
+    </div>
+{% endblock %}
+```

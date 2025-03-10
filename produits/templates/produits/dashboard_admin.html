@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Tableau de Bord Admin{% endblock %}
+
+{% block content %}
+
+{% if nb_nouvelles_commandes > 0 %}
+    <div class="alert alert-info">
+        🔔 Vous avez {{ nb_nouvelles_commandes }} nouvelle(s) commande(s) en attente de traitement !
+        <a href="{% url 'mes_commandes' %}" class="btn btn-sm btn-primary">Voir</a>
+    </div>
+{% endif %}
+
+{% if commandes_en_attente > 0 %}
+<div class="alert alert-warning text-center">
+    🔔 <strong>Attention :</strong> Vous avez {{ commandes_en_attente }} commande(s) en attente !
+    <a href="{% url 'mes_commandes' %}?statut=en_attente" class="btn btn-sm btn-primary">Voir</a>
+</div>
+{% endif %}
+
+<div class="container mt-5">
+    <h1>📊 Tableau de Bord Administrateur</h1>
+
+    <div class="row mt-4">
+        <!-- Total Commandes -->
+        <div class="col-md-3">
+            <div class="card bg-primary text-white text-center shadow-lg p-3">
+                <h3>{{ total_commandes }}</h3>
+                <p>Total Commandes</p>
+            </div>
+        </div>
+
+        <!-- Chiffre d'Affaires -->
+        <div class="col-md-3">
+            <div class="card bg-success text-white text-center shadow-lg p-3">
+                <h3>{{ chiffre_affaires }} €</h3>
+                <p>Chiffre d'Affaires</p>
+            </div>
+        </div>
+
+        <!-- Produits en Stock Faible -->
+        <div class="col-md-3">
+            <div class="card bg-warning text-white text-center shadow-lg p-3">
+                <h3>{{ produits_stock_faible }}</h3>
+                <p>Produits en Stock Faible</p>
+            </div>
+        </div>
+
+        <!-- Nombre de Clients -->
+        <div class="col-md-3">
+            <div class="card bg-danger text-white text-center shadow-lg p-3">
+                <h3>{{ total_clients }}</h3>
+                <p>Clients Enregistrés</p>
+            </div>
+        </div>
+    </div>
+
+        <!-- 📊 Graphique des Commandes par Mois -->
+        <h2 class="mt-5">📊 Commandes par Mois</h2>
+        <div class="d-flex justify-content-center">
+            <canvas id="chartCommandes" style="max-width: 600px; height: 200px;"></canvas>
+        </div>
+
+        <!-- 📉 Graphique de l'État des Stocks -->
+        <h2 class="mt-5">📉 État des Stocks</h2>
+        <div class="d-flex justify-content-center">
+            <canvas id="chartStocks" style="max-width: 700px; height: 250px;"></canvas>
+        </div>
+
+        <script>
+        
+            document.addEventListener("DOMContentLoaded", function () {
+                // 📊 Commandes par Mois
+                var ctxCommandes = document.getElementById('chartCommandes').getContext('2d');
+                new Chart(ctxCommandes, {
+                    type: 'bar',
+                    data: {
+                        labels: JSON.parse('{{ mois_noms|escapejs }}'),
+                        datasets: [{
+                            label: 'Nombre de Commandes',
+                            data: JSON.parse('{{ commandes_par_mois|escapejs }}'),
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+        
+                // 📉 État des Stocks
+                var ctxStocks = document.getElementById('chartStocks').getContext('2d');
+                new Chart(ctxStocks, {
+                    type: 'pie',
+                    data: {
+                        labels: JSON.parse('{{ noms_produits|escapejs }}'),
+                        datasets: [{
+                            label: 'Stock Disponible',
+                            data: JSON.parse('{{ stock_produits|escapejs }}'),
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.6)',
+                                'rgba(54, 162, 235, 0.6)',
+                                'rgba(255, 206, 86, 0.6)',
+                                'rgba(75, 192, 192, 0.6)',
+                                'rgba(153, 102, 255, 0.6)',
+                                'rgba(255, 159, 64, 0.6)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { responsive: true ,
+                    maintainAspectRatio: false  // ✅ Corrige le problème de proportion
+                    }
+                });
+            });
+        </script>
+
+    <div class="mt-5">
+        <a href="{% url 'gestion_stock' %}" class="btn btn-outline-danger">📦 Gestion des Stocks</a>
+        <a href="{% url 'admin:index' %}" class="btn btn-outline-dark">🔧 Accéder à l'Admin</a>
+        <a href="{% url 'export_excel' %}" class="btn btn-success">
+            📥 Exporter les Statistiques en Excel
+        </a>
+    </div>
+</div>
+{% endblock %}
+

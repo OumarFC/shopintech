@@ -1,0 +1,308 @@
+/* ✅ Couleur de fond globale */
+body {
+    background-color: #f8f9fa;
+}
+
+/* ✅ Style de la barre de navigation */
+.navbar {
+    background-color: #343a40 !important;
+    width: 85%; /* ✅ Ajustement de la largeur */
+    margin: auto;
+}
+.navbar-brand, .nav-link {
+    color: white !important;
+}
+.nav-link:hover {
+    color: #f8f9fa !important;
+}
+
+/* ✅ Style du fil d'Ariane */
+.breadcrumb {
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.breadcrumb-item a {
+    text-decoration: none;
+    color: #007bff;
+}
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+/* ✅ Style des tableaux */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.table th {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 8px;
+}
+.table td {
+    text-align: center;
+    padding: 5px;
+}
+.table tbody tr:hover {
+    background-color: #f2f2f2;
+    transition: 0.3s;
+}
+
+/* ✅ Styles des boutons */
+.btn {
+    padding: 10px 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+.btn-outline-primary {
+    border: 2px solid #007bff;
+    color: #007bff;
+    background: transparent;
+}
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #a71d2a;
+    transform: scale(1.05);
+}
+
+/* ✅ Agrandir l’image principale */
+.img-detail {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* ✅ Style des miniatures */
+.img-miniature {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease-in-out;
+}
+.img-miniature:hover {
+    transform: scale(1.1);
+    border: 2px solid #007bff;
+}
+
+/* ✅ Correction des boutons */
+.btn {
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+
+
+/* ✅ Ajustement de la largeur des barres latérales */
+.sidebar-left, .sidebar-right {
+    min-height: 100vh; /* ✅ Garde une hauteur correcte */
+}
+
+/* ✅ Déplacement de la barre latérale droite vers le bas */
+.sidebar-right {
+    margin-top: 40px;
+    position: relative;
+}
+
+/* ✅ Augmentation de la largeur du contenu principal */
+.content-center {
+    width: 80%; /* ✅ Avant 76%, maintenant 80% */
+}
+
+/* ✅ Augmenter l'espace entre les produits */
+.row {
+    gap: 10px; /* ✅ Augmente l’espace entre les colonnes */
+}
+
+/* ✅ Ajustement du bouton de la liste déroulante */
+.dropdown-toggle {
+    min-width: 140px;
+    text-align: center;
+}
+
+/* ✅ Ajustement des options du menu déroulant */
+.dropdown-menu {
+    min-width: 200px;
+    text-align: left;
+}
+
+/* ✅ Espacement entre les lignes pour une meilleure lisibilité */
+.table tbody tr {
+    height: 55px;
+}
+
+/* ✅ Alignement en mode flex */
+.row {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap; /* ✅ Empêche que les infos passent en dessous */
+}
+
+/* ✅ Taille correcte pour l’image principale */
+.img-detail {
+    width: 100%;
+    max-height: 450px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* ✅ Organisation des miniatures sous l’image principale */
+.img-miniature {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease-in-out;
+}
+
+.img-miniature:hover {
+    transform: scale(1.1);
+    border: 2px solid #007bff;
+}
+
+/* ✅ Empêche que les détails passent en dessous sur grand écran */
+@media (min-width: 768px) {
+    .row {
+        flex-wrap: nowrap;
+    }
+    .col-md-6 {
+        flex: 1;
+    }
+}
+
+/* ✅ Alignement des produits dans index.html */
+.row {
+    display: flex;
+    flex-wrap: wrap; /* ✅ Empêche les produits de se coller et force le retour à la ligne */
+    justify-content: center;
+    margin-left: -10px;
+    margin-right: -10px;
+    gap: 15px; /* Diminue l’écart entre les colonnes */
+}
+
+/* ✅ Espace entre les produits */
+.col {
+    display: flex;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+/* ✅ Ajout d’un effet hover pour rendre la page plus dynamique */
+.card:hover {
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+}
+
+/* ✅ Organisation de la mise en page */
+.container-fluid .row {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ✅ Ajustement du contenu principal */
+.container {
+    padding: 10px;
+}
+
+/* ✅ Ajustement des images des produits */
+.img-produit {
+    width: 300px;
+    height: 300px; /* ✅ Taille uniforme */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+
+/* ✅ Style du Carrousel */
+.carousel-img {
+    height: 500px; /* ✅ Taille adaptée */
+    object-fit: cover; /* ✅ Évite la déformation */
+    border-radius: 8px;
+}
+
+/* ✅ Style des captions (textes sur les images) */
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5); /* ✅ Ajoute un effet semi-transparent */
+    padding: 5px;
+    border-radius: 8px;
+}
+
+/* ✅ Réduction de l’espace entre les produits */
+.row {
+    gap: 15px; /* Diminue l’écart entre les colonnes */
+}
+
+/* ✅ Assure que chaque produit prend la largeur disponible */
+.col {
+    flex-grow: 1; /* Permet aux cartes de s’adapter à l’espace */
+    max-width: 100%;
+}
+
+/* ✅ Ajuste la largeur des cartes */
+.card {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ✅ Ajuste la hauteur des images sans déformation */
+.card-img-top {
+    object-fit: cover;
+}
+
+/* ✅ Pied de page (footer) */
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+    font-size: 14px;
+}
+footer a {
+    color: #f8f9fa;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+.img-produit-similaire {
+    width: 100px;  /* Largeur souhaitée */
+    height: 100px; /* Hauteur souhaitée */
+    object-fit: cover; /* Maintient le ratio en remplissant le conteneur */
+}

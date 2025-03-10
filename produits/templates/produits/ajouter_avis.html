@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Donner un Avis - {{ produit.nom }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">📝 Laisser un Avis sur "{{ produit.nom }}"</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Votre Note :</label>
+                            {{ form.note }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Votre Avis :</label>
+                            {{ form.commentaire }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-check"></i> Soumettre l'Avis
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <a href="{% url 'produit_detail' produit.id %}" class="btn btn-outline-secondary mt-3">
+                <i class="fas fa-arrow-left"></i> Retour au Produit
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

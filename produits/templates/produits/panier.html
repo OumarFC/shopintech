@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Mon Panier - Shopintech{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>🛒 Mon Panier</h1>
+
+    {% if panier_detail %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in panier_detail %}
+                    <tr>
+                        <td>{{ item.produit.nom }}</td>
+                        <td>{{ item.produit.prix }} €</td>
+                        <td>{{ item.quantite }}</td>
+                        <td>{{ item.produit.prix|floatformat:2 }} €</td>
+                        <td>
+                            <a href="{% url 'modifier_panier' item.produit.id 'augmenter' %}" class="btn btn-success btn-sm">+</a>
+                            <a href="{% url 'modifier_panier' item.produit.id 'diminuer' %}" class="btn btn-warning btn-sm">-</a>
+                            <a href="{% url 'supprimer_du_panier' item.produit.id %}" class="btn btn-danger btn-sm">❌</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- 🔥 Boutons en bas de page -->
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'index' %}" class="btn btn-secondary">🛍️ Continuer vos achats</a>
+            <a href="{% url 'passer_commande' %}" class="btn btn-success">✅ Passer la commande</a>
+        </div>
+
+    {% else %}
+        <p class="text-center">Votre panier est vide.</p>
+        <a href="{% url 'index' %}" class="btn btn-primary">🛍️ Retour à la boutique</a>
+    {% endif %}
+</div>
+{% endblock %}

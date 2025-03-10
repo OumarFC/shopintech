@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Mes Favoris{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">❤️ Mes Produits Favoris</h1>
+
+    {% if favoris %}
+    <div class="row">
+        {% for favori in favoris %}
+        <div class="col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ favori.produit.image_principale.url }}" class="card-img-top img-produit" alt="{{ favori.produit.nom }}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ favori.produit.nom }}</h5>
+                    <p class="card-text text-muted">{{ favori.produit.prix }} €</p>
+                    <a href="{% url 'produit_detail' favori.produit.id %}" class="btn btn-primary w-100">
+                        <i class="fas fa-eye"></i> Voir le Produit
+                    </a>
+                    <a href="{% url 'supprimer_favori' favori.produit.id %}" class="btn btn-outline-danger w-100 mt-2">
+                        <i class="fas fa-trash"></i> Retirer des Favoris
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center text-danger">❌ Vous n'avez aucun produit en favori.</p>
+    {% endif %}
+</div>
+{% endblock %}

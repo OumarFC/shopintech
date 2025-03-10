@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Connexion - Shopintech{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center " style="min-height: 50vh; background-color: #f8f9fa;">
+    <div class="card shadow-lg p-5" style="width: 100%; border-radius: 12px;">
+        <h2 class="text-center mb-4">🔑 Connexion</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Nom d'utilisateur</label>
+                <input type="text" name="username" class="form-control" placeholder="Entrez votre nom d'utilisateur" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Mot de passe</label>
+                <input type="password" name="password" class="form-control" placeholder="Entrez votre mot de passe" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fs-5">Se connecter</button>
+        </form>
+
+        <p class="mt-4 text-center">
+            Pas encore de compte ? <a href="{% url 'register' %}" class="fw-bold">Créez-en un ici</a>.
+        </p>
+    </div>
+</div>
+{% endblock %}

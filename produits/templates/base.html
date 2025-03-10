@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Shopintech{% endblock %}</title>
+
+    <!-- ✅ Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ✅ FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'produits/styles.css' %}">
+</head>
+<body>
+
+    <!-- 🔥 Affichage des messages d'alerte Django -->
+    {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- ✅ Barre de navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid" style="max-width: 80%;">  
+            <a class="navbar-brand" href="{% url 'index' %}">🛍️ Shopintech</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">🏠 Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'mes_favoris' %}">❤️ Mes Favoris</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'panier' %}">🛒 Mon Panier</a></li>
+                    <!-- ✅ Dropdown Catégories -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown">
+                            🛍️ Catégories
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                            <li><a class="dropdown-item" href="{% url 'produits_par_categorie' 'informatique' %}">💻 Informatique</a></li>
+                            <li><a class="dropdown-item" href="{% url 'produits_par_categorie' 'telephonie' %}">📱 Téléphonie</a></li>
+                            <li><a class="dropdown-item" href="{% url 'produits_par_categorie' 'cosmetique' %}">🧴 Cosmétiques</a></li>
+                            <li><a class="dropdown-item" href="{% url 'produits_par_categorie' 'alimentaire' %}">🍎 Alimentaire</a></li>
+                        </ul>
+                    </li>
+                    <!-- ✅ Produits & Commandes -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="produitsDropdown" role="button" data-bs-toggle="dropdown">
+                            📦 Produits & Commandes
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'liste_produits' %}">📦 Tous les Produits</a></li>
+                            <li><a class="dropdown-item" href="{% url 'mes_commandes' %}">📑 Mes Commandes</a></li>
+                            {% if user.is_staff %}
+                                <li><a class="dropdown-item" href="{% url 'gestion_stock' %}">📦 Gestion Stock (Admin)</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+
+                    <!-- ✅ Support & Aide -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="supportDropdown" role="button" data-bs-toggle="dropdown">
+                            💬 Support & Aide
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'chat_support' %}">💬 Chat Support</a></li>
+                            <li><a class="dropdown-item" href="{% url 'mes_messages' %}">📩 Messages au Support</a></li>
+                            <li><a class="dropdown-item" href="{% url 'mes_retours' %}">🔄 Retours & Remboursements</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- ✅ Mon Compte -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="compteDropdown" role="button" data-bs-toggle="dropdown">
+                            👤 Mon Compte
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">🚪 Déconnexion</a></li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="{% url 'login' %}">🔑 Connexion</a></li>
+                                <li><a class="dropdown-item" href="{% url 'register' %}">📝 Inscription</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ✅ Fil d'Ariane avec " > " -->
+    <div class="container mt-3" style="max-width: 80%;">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-light p-2 rounded">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">🏠 Accueil</a></li>
+                {% for breadcrumb in request.breadcrumbs %}
+                    {% if forloop.last %}
+                        <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb.title }}</li>
+                    {% else %}
+                        <li class="breadcrumb-item"><a href="{{ breadcrumb.url }}">{{ breadcrumb.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </nav>
+    </div>
+
+    <!-- ✅ Barre de recherche -->
+    <div class="container mt-3" style="max-width: 80%;">
+        <form class="d-flex justify-content-center" action="{% url 'recherche_produits' %}" method="GET">
+            <input class="form-control me-2 w-50" type="search" name="q" placeholder="🔍 Rechercher un produit..." value="{{ request.GET.q }}">
+            <button class="btn btn-primary" type="submit">Rechercher</button>
+        </form>
+    </div>
+
+    <div class="container mt-4" style="max-width: 80%;">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- 📊 Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- ✅ Activation des dropdowns -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var dropdownElements = document.querySelectorAll(".dropdown-toggle");
+            dropdownElements.forEach(function(dropdown) {
+                new bootstrap.Dropdown(dropdown);
+            });
+        });
+    </script>
+    <!-- ✅ Footer -->
+    <footer class="bg-dark text-white text-center p-3 mt-5">
+        <p>&copy; 2025 Shopintech - Tous droits réservés.</p>
+        <p>
+            <a href="{% url 'contact' %}" class="text-light">📩 Contact</a> |
+            <a href="#" class="text-light">🔒 Politique de Confidentialité</a> |
+            <a href="#" class="text-light">📜 Conditions Générales</a>
+        </p>
+    </footer>
+</body>
+</html>

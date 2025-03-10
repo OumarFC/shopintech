@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Validation de la commande{% endblock %}
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+
+<div class="container mt-5">
+    <h1>📦 Finalisation de votre commande</h1>
+
+     <!-- 🔥 Message pour les utilisateurs non connectés -->
+     {% if not user.is_authenticated %}
+     <div class="alert alert-warning text-center">
+         ⚠️ Vous devez <a href="{% url 'login' %}">vous connecter</a> ou 
+         <a href="{% url 'register' %}">créer un compte</a> pour valider votre commande.
+     </div>
+    {% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}  <!-- ✅ Vérification que le token CSRF est bien ajouté -->
+        <div class="mb-3">
+            <label class="form-label">Nom complet</label>
+            <input type="text" name="nom" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Adresse Email</label>
+            <input type="email" name="email" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">✅ Valider la commande</button>
+    </form>
+</div>
+{% endblock %}

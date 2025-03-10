@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}  <!-- ✅ Charge les fichiers statiques -->
+
+{% block title %}Accueil - Shopintech{% endblock %}
+
+{% block content %}
+
+<!-- ✅ Carrousel Publicitaire -->
+<div id="carouselPub" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'produits/pub1.png' %}" class="d-block w-100 carousel-img" alt="Promo Informatique">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>🔥 Promo sur les Ordinateurs Portables</h5>
+                <p>Jusqu'à -30% sur les derniers modèles !</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'produits/pub2.png' %}" class="d-block w-100 carousel-img" alt="Promo Téléphones">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>📱 Nouveaux Smartphones Disponibles</h5>
+                <p>Découvrez les dernières innovations !</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'produits/pub3.png' %}" class="d-block w-100 carousel-img" alt="Promo Cosmétiques">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>🧴 Offres Spéciales sur les Cosmétiques</h5>
+                <p>Prenez soin de vous avec nos produits naturels.</p>
+            </div>  
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'produits/pub4.png' %}" class="d-block w-100 carousel-img" alt="Promo Alimentaire">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>🍎 Produits Alimentaires Frais</h5>
+                <p>Des prix incroyables sur les produits bio et frais !</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ Contrôles du Carrousel -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselPub" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Précédent</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselPub" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Suivant</span>
+    </button>
+</div>
+
+<!-- ✅ Contenu principal -->
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- ✅ Barre latérale gauche (Options) -->
+        <div class="col-lg-2 col-md-3 sidebar-left bg-light p-3 rounded">
+            <h5>📌 Options</h5>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{% url 'recherche_produits' %}">🔍 Rechercher</a></li>
+                <li class="list-group-item"><a href="{% url 'mes_favoris' %}">❤️ Mes Favoris</a></li>
+                <li class="list-group-item"><a href="{% url 'panier' %}">🛒 Mon Panier</a></li>
+            </ul>
+        </div>
+
+        <!-- ✅ Affichage principal des produits -->
+        <div class="col-lg-8 col-md-6">
+            <h2 class="text-center">🛍️ Nos Produits</h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                {% for produit in produits %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        {% if produit.image_principale %}
+                            <img src="{{ produit.image_principale.url }}" class="card-img-top img-produit" alt="{{ produit.nom }}">
+                        {% else %}
+                            <img src="/media/produits/default.jpg" class="card-img-top img-produit" alt="Image par défaut">
+                        {% endif %}
+                        <div class="card-body text-center">
+                            <h6 class="card-title">{{ produit.nom }}</h6>
+                            <p class="text-muted">{{ produit.prix }} €</p>
+                            <a href="{% url 'produit_detail' produit.id %}" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-eye"></i> Voir le Produit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ✅ Barre latérale droite (Filtres) -->
+        <div class="col-lg-2 col-md-3 sidebar-right bg-light p-3 mt-4 rounded">
+            <h5>⚙️ Filtrer</h5>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="#">🔽 Trier par prix</a></li>
+                <li class="list-group-item"><a href="#">⭐ Meilleures ventes</a></li>
+                <li class="list-group-item"><a href="#">📅 Nouveautés</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
