@@ -1,7 +1,8 @@
 from django.conf import settings
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.db.models import Sum, Count
 from django.http import HttpResponse
 from django.db.models import Q
@@ -14,10 +15,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from .models import Produit, Commande  # ✅ Ajout de Commande
-from django.shortcuts import render, get_object_or_404, redirect  
+from django.shortcuts import render, redirect  
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
@@ -437,7 +437,11 @@ def export_excel(request):
 
 @login_required
 def envoyer_message(request, destinataire_id):
-    destinataire = get_object_or_404(User, id=destinataire_id)
+    try:
+        destinataire = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        messages.error(request, "Utilisateur non trouvé.")
+        return redirect("mes_messages")
 
     if request.method == "POST":
         form = MessageForm(request.POST)
@@ -452,6 +456,7 @@ def envoyer_message(request, destinataire_id):
         form = MessageForm()
 
     return render(request, "produits/envoyer_message.html", {"form": form, "destinataire": destinataire})
+
 
 @login_required
 def boite_reception(request):
@@ -602,12 +607,12 @@ def demander_retour(request, commande_id):
 
     return render(request, "produits/demander_retour.html", {"form": form, "commande": commande})
 
+
 @login_required
 def mes_messages(request):
-    """ Affiche tous les messages envoyés par l'utilisateur """
-    messages_support = MessageSupport.objects.filter(utilisateur=request.user).order_by("-date_envoi")
-    
-    return render(request, "produits/mes_messages.html", {"messages_support": messages_support})
+    messages_support = Message.objects.filter(expediteur=request.user)
+    support_user = User.objects.get(username='support')  # Remplacez 'support' par le nom d'utilisateur réel du support
+    return render(request, 'produits/mes_messages.html', {'messages_support': messages_support, 'support_user': support_user})
 
 @login_required
 def chat_support(request):

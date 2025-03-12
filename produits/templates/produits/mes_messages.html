@@ -5,8 +5,7 @@
 {% block content %}
 <div class="container mt-5">
     <h1>📩 Mes Messages</h1>
-    <a href="{% url 'envoyer_message' %}" class="btn btn-primary mb-3">✉️ Nouveau message</a>
-
+    <a href="{% url 'envoyer_message' support_user.id %}" class="btn btn-primary mb-3">✉️ Nouveau message</a>
     {% if messages_support %}
         <table class="table table-striped">
             <thead>
