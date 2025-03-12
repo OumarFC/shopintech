@@ -4,9 +4,25 @@ sk_test_51Qx7njD3bQ3Mp1WypRXxbWnmuSEjKV3I26UtZYN4GheTuxFPpI1dE1c9qr2auTqmYv355an
 
 carte streepe
 
+Payement reussi
 4242 4242 4242 4242
 ✔️ Date d'expiration : N'importe quelle date future (ex: 12/34)
 ✔️ CVC : 123
 ✔️ Code postal : N'importe quel code
 
 🚀 Cela simule un paiement réussi !
+
+
+payement en erreur :
+
+4000 0000 0000 9995
+✔️ Date d'expiration : N'importe quelle date future (ex: 12/34)
+✔️ CVC : 123
+✔️ Code postal : N'importe quel code
+
+📌 Résultat attendu : Stripe refusera le paiement et affichera un message d’erreur.
+
+
+
+git clone https://github.com/OumarFC/shopintech.git
+git pull origin master
