@@ -28,9 +28,9 @@ STRIPE_PUBLIC_KEY = "pk_test_51Qx7njD3bQ3Mp1Wyazs0PGhZiZfh1HEE7I6j3vaAPwUbz0tYf7
 STRIPE_SECRET_KEY = "sk_test_51Qx7njD3bQ3Mp1WypRXxbWnmuSEjKV3I26UtZYN4GheTuxFPpI1dE1c9qr2auTqmYv355anZKjjxbquW5Lg5a1yr007T0dO22Z"  # Remplace par ta clé secrèt
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['shopintech.fr', 'www.shopintech.fr']
 
 
 # Application definition
@@ -137,7 +137,9 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 LOGIN_URL = '/login/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-STATICFILES_DIRS = [BASE_DIR / "produits/static"]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
